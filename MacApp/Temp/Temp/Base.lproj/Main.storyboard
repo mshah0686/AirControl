@@ -711,11 +711,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sg5-Vi-mRs">
-                                <rect key="frame" x="63" y="212" width="177" height="32"/>
+                                <rect key="frame" x="71" y="198" width="177" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Most important button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Jk-ty-xCu">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="button:" target="XfG-lQ-9wD" id="HNI-aI-6uv"/>
+                                    </connections>
                                 </buttonCell>
                             </button>
                         </subviews>

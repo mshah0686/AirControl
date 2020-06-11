@@ -21,7 +21,10 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-
+    
+    //Method for pressing button -> execute python script here
+    @IBAction func button(_ sender: Any) {
+        
+    }
 }
 

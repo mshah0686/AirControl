@@ -15,19 +15,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        print("hello world")
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
-    @IBAction func talk(sender: NSButton) {
-        print("hello world")
-        let path = "/usr/bin/say"
-        let arguments = ["hello world"]
-        let task = Process.launchedProcess(launchPath: path, arguments: arguments)
-        task.waitUntilExit()
-    }
+
 
 
 }
