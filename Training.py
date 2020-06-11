@@ -26,8 +26,8 @@ def extract_features(file_name, classification):
     for peak in peaks:
         #f is the sub frame of the peak (certain parameter left and right of it)
         frame = data[peak-50:peak+50, :]
-        plt.plot(frame)
-        plt.show()
+        #plt.plot(frame)
+        #plt.show()
         frame_var = np.var(frame, axis = 0)
         frame_skew = stat.skew(frame, axis = 0)
         frame_kurt = stat.kurtosis(frame, axis = 0)
@@ -40,24 +40,25 @@ def extract_features(file_name, classification):
     y = np.ones(len(peaks)) * classification
     return total_features, y
 
-def extract_noise(filename, classification):
+def extract_noise(file_name, classification):
     data = np.genfromtxt(file_name, delimiter=',')
     total_features = []
     size = len(data[:,2])
     samples_done = 0
-    for i in range(40, size - 50, 25):
+    for i in range(50, size - 50, 25):
         samples_done = samples_done + 1
         frame = data[i - 50: i+50, :]
-        frame_var = np.var(frame, axis = 0)
-        frame_skew = stat.skew(frame, axis = 0)
-        frame_kurt = stat.kurtosis(frame, axis = 0)
-
-        features = np.hstack((frame_var, frame_skew, frame_kurt))
+        frame_var = np.transpose(np.var(frame, axis = 0))
+        frame_skew = np.transpose(stat.skew(frame, axis = 0))
+        frame_kurt = np.transpose(stat.kurtosis(frame, axis = 0))
+        features = np.hstack((frame_var, frame_skew, frame_kurt)).reshape(-1, 9)
         if np.size(total_features) == 0:
             total_features = features
         else:
             total_features = np.vstack((total_features, features))
+            print(total_features.shape)
     y = np.ones(samples_done) * classification
+    print(y)
     return total_features, y
 
 
@@ -86,14 +87,14 @@ def train():
     #extract features from two csv files
     #extract features on :1 but peaks are negative
     features_swipe_left, y_swipe_left = extract_features('TrainingData/swipe_left.csv', 1)
-    features_swipe_left, y_swipe_right = extract_features('TrainingData/swipe_right.csv',  2)
+    features_swipe_right, y_swipe_right = extract_features('TrainingData/swipe_right.csv',  2)
     features_hover, y_hover = extract_noise('TrainingData/hover.csv', 3)
     features_jitter, y_jitter = extract_features('TrainingData/jitter.csv', 4)
-    
+
     #combine data
-    y = np.vstack(( y_left.reshape(-1,1) , y_right.reshape(-1, 1) , y_up.reshape(-1, 1), y_noise.reshape(-1, 1)))
-    X = np.vstack((features_left, features_right, features_up, features_noise))
-    
+    y = np.vstack(( y_swipe_left.reshape(-1,1) , y_swipe_right.reshape(-1, 1) , y_hover.reshape(-1, 1), y_jitter.reshape(-1, 1)))
+    X = np.vstack((features_swipe_left, features_swipe_right, features_hover, features_jitter))
+
     #randomize data
     print('Pre-proc: getting training features...')
     data = np.hstack((X, y))
@@ -104,12 +105,6 @@ def train():
     #train model
     print('Training model...')
     trained_model = train_model(X,y)
-
-    #create validation set data
-    #cv_x, cv_y = extract_features('cv_set.csv')
-    #print(len(cv_y))
-    #cv_x = np.vstack((cv_x, total_features_neg))
-    #cv_y = np.append(cv_y, y_neg)
     
     #Predice on model
     print('Validation scores....')
