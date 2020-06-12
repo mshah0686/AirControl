@@ -8,7 +8,7 @@ import pyautogui
 
 def tracker():
     sample_rate = 100 #hertz
-    time = 14 #seconds
+    time = 20 #seconds
     sampleSize = sample_rate * time
 
     port = '/dev/tty.usbmodem1421'
@@ -37,5 +37,5 @@ def tracker():
 if __name__ == '__main__':
     irData = tracker()
     plt.plot(irData)
-    np.savetxt('jitter.csv', irData, delimiter=',', fmt='%d')
+    np.savetxt('swipe_left.csv', irData, delimiter=',', fmt='%d')
     plt.show()

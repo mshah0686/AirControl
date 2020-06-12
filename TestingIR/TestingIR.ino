@@ -10,9 +10,9 @@ void setup() {
 }
 
 void loop() {
-  int val1 = analogRead(input) - 230;
-  int val2 = analogRead(input2) -230;
-  int val3 = analogRead(input3) -230;
+  int val1 = analogRead(input) - 190;
+  int val2 = analogRead(input2) -190;
+  int val3 = analogRead(input3) -190;
 
   if(val1 < 0) {
     val1 = 0;}
