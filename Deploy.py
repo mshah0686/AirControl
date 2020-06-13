@@ -9,7 +9,6 @@ import numpy as np
 import scipy.signal as sig
 import scipy.stats as stat
 from threading import Event
-from sklearn.ensemble import RandomForestClassifier
 import serial
 import time
 import matplotlib as plt
@@ -19,7 +18,7 @@ from joblib import load
 buffer_full = Event()
 
 #sample size
-buffer_size = 150
+buffer_size = 50
 
 #single samle
 accX = np.zeros(buffer_size, dtype=float)
@@ -38,8 +37,15 @@ def take_input():
     ard.flushInput()
     while True:
         data = ard.readline()
-        new_sample = np.zeros((1, 3))
-        new_sample = np.asarray(data[:-2].split(b','))
+        new_sample = np.zeros((1, 3), dtype = int)
+        Data = np.asarray(data[:-2].split(b','))
+        try:
+            new_sample[0,0] = int(Data[0])
+            new_sample[0, 1] = int(Data[1])
+            new_sample[0, 2] = int(Data[2]) 
+        except:
+            print('error')
+            pass      
         #delete top element of buffer
         buffer = np.delete(buffer, 0, 0)
         #add new sample in (creates a queue)
@@ -57,21 +63,28 @@ def analyze():
         frame_var = np.var(frame, axis = 0)
         frame_skew = stat.skew(frame, axis = 0)
         frame_kurt = stat.kurtosis(frame, axis = 0)
-        #frame_gmean = np.transpose(stat.gmean(frame, axis = 0))
-        features = np.hstack((frame_var, frame_skew, frame_kurt, frame_kurt)).reshape(-1, 12)
+        features = np.hstack((frame_var, frame_skew, frame_kurt)).reshape(-1, 9)
         prediction =predict(features)
-        if(prediction[0] == 1):
-            print('Gesture Detected: swipe_left')
-            samples_done = 0
-        elif(prediction[0] == 2):
-            print('Gesture Detected: swipe_right')
+        peaks_right,_ = sig.find_peaks(frame[:,2], height = 200)
+        peaks_left,_ = sig.find_peaks(frame[:,0], height = 200)
+        if prediction[0] == 1 or prediction[0] == 2:
+            #check the peaks to determine left/right swipe
+            print(peaks_left)
+            print(peaks_right)
+            try:
+                if peaks_right[0] > peaks_left[0]:
+                    print('Gesture Detected: swipe_left')
+                else:
+                    print('Gesture Detected: swipe_right')
+            except:
+                pass
             samples_done = 0
         elif(prediction[0] == 3):
             print('Gesture Detected: Hover')
             samples_done = 0
-        elif(prediction[0] == 4):
-            print('Gesture Detected: jitter')
-            samples_done = 0
+        #elif(prediction[0] == 4):
+        #    print('Gesture Detected: jitter')
+        #    samples_done = 0
         buffer_full.clear()
 
 
