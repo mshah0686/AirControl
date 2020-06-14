@@ -2,7 +2,7 @@
 Device that integrates air gestures to macOS commands for increased productivity and laptop interaction. Uses sensor data, arduino, and sklearn.
 
 # Intro
-The challenge was a weekend build project to learn machine learning and develope a cool human machine interaction (HMI) device. The idea was to use cheap IR sensors to recognize various hand gestures for increase work automation. Here is a preview of two gestures of the 4 programmed. They also can be programmed to different automation tasks such as music control, slide control on presentation, typing assist, or tablet application control.
+The challenge was a weekend build project to learn machine learning and develop a cool human machine interaction (HMI) device. The idea was to use cheap IR sensors to recognize various hand gestures for increase work automation. Here is a preview of two gestures of the 4 programmed. They also can be programmed to different automation tasks such as music control, slide control on presentation, typing assist, or tablet application control.
 
 ![Working Gif](https://github.com/mshah0686/AirControl/blob/master/Documentation/ezgif.com-video-to-gif.gif)
 
