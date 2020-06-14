@@ -10,16 +10,9 @@ void setup() {
 }
 
 void loop() {
-  int val1 = analogRead(input) - 190;
-  int val2 = analogRead(input2) -190;
-  int val3 = analogRead(input3) -190;
-
-  if(val1 < 0) {
-    val1 = 0;}
-  if(val2 < 0) {
-    val2 = 0;}
-  if(val3 < 0) {
-    val3 = 0;}
+  int val1 = analogRead(input);
+  int val2 = analogRead(input2);
+  int val3 = analogRead(input3);
   
   Serial.print(val1);
   Serial.print(",");

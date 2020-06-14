@@ -37,5 +37,5 @@ def tracker():
 if __name__ == '__main__':
     irData = tracker()
     plt.plot(irData)
-    np.savetxt('swipe_left.csv', irData, delimiter=',', fmt='%d')
+    np.savetxt('nothing.csv', irData, delimiter=',', fmt='%d')
     plt.show()
