@@ -25,4 +25,4 @@ The other signals are stored as CSV files in the TrainingData folder as well.
 Training was done using `sklearn` RandomForrestClassifier with a One versus all set up. I also tested SVM, but found a lot more glitches and false positives.
 
 # Furtherwork
-I want to develope a full application maybe on swift or python based that let's you select different modes for operation (like mentioned above). I also want to try more gestures but I am limited because the hardware values are not always consistent so the model has a hard time training to such variations.
+I want to develop a full application maybe on swift or python based that let's you select different modes for operation (like mentioned above). I also want to try more gestures but I am limited because the hardware values are not always consistent so the model has a hard time training to such variations.
